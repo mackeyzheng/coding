@@ -35,7 +35,6 @@ public class UnionFind {
         return parent;
     }
     
-
     // union roots of each node, depends on find() implementation
     public void union(int x, int y) {
         int xRoot = find(x);

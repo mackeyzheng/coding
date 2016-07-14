@@ -18,6 +18,7 @@ public class Solution {
         for (DirectedGraphNode cur : nodes)
             nodeSet.add(cur.label);
 
+        // iterate edges to construct a union find
         UnionFind uf = new UnionFind(nodeSet);
         for (DirectedGraphNode cur : nodes) {
             for (DirectedGraphNode neighbor : cur.neighbors) {
