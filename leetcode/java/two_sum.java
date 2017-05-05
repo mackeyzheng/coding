@@ -1,37 +1,16 @@
-// assumption: each input would have exact one solution
+// time: O(n)
 public class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        int[] ret = {-1, -1};
-        int[] copy = Arrays.copyOf(numbers, numbers.length);
-        Arrays.sort(copy);
-
-        int p = 0;
-        int q = copy.length - 1;
-        boolean found = false;
-        while (p < q) {
-            int sum = copy[p] + copy[q];
-            if (sum == target) {
-                found = true;
-                break;
+    public int[] twoSum(int[] nums, int target) {
+        int[] ret = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                ret[1] = i;
+                ret[0] = map.get(target - nums[i]);
+                return ret;
             }
-            if (sum < target)
-                p++;
-            else
-                q--;
+            map.put(nums[i], i);
         }
-
-        if (!found) return ret;
-
-        for (int i = 0; i < numbers.length; i++) {
-            if (ret[0] != -1 && ret[1] != -1)
-                break;
-            if (ret[0] == -1 && numbers[i] == copy[p])
-                ret[0] = i + 1;
-            else if (ret[1] == -1 && numbers[i] == copy[q])
-                ret[1] = i + 1;
-        }
-
-        Arrays.sort(ret);
         return ret;
     }
 }
