@@ -17,17 +17,16 @@
  */
 public class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
-        if (nestedList == null) return 0;
-        return dfs(1, nestedList);
+        return nestedList == null ? 0 : dfs(1, nestedList);
     }
 
-    private int dfs(int level, List<NestedInteger> nestedList) {
+    private int dfs(int level, List<NestedInteger> list) {
         int sum = 0;
-        for (NestedInteger ni : nestedList) {
-            if (ni.isInteger())
-                sum += ni.getInteger() * level;
+        for (NestedInteger item : list) {
+            if (item.isInteger())
+                sum += item.getInteger() * level;
             else
-                sum += dfs(level+1, ni.getList());
+                sum += dfs(level + 1, item.getList());
         }
         return sum;
     }
