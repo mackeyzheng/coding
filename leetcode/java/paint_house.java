@@ -8,8 +8,7 @@ public class Solution {
             dp[i%2][1] = Math.min(dp[(i-1)%2][0], dp[(i-1)%2][2]) + costs[i][1];
             dp[i%2][2] = Math.min(dp[(i-1)%2][0], dp[(i-1)%2][1]) + costs[i][2];
         }
-
-        int pos = (costs.length-1) % 2;
+        int pos = (costs.length - 1) % 2;
         return Math.min(Math.min(dp[pos][0], dp[pos][1]), dp[pos][2]);
     }
 }
