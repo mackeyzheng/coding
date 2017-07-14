@@ -1,18 +1,23 @@
 public class Solution {
     public boolean isIsomorphic(String s, String t) {
-        Character[] map1 = new Character[255];
-        Character[] map2 = new Character[255];
+        if (s == null || t == null || s.length() != t.length()) return false;
+
+        int[] sHash = new int[256];
+        int[] tHash = new int[256];
+        Arrays.fill(sHash, -1);
+        Arrays.fill(tHash, -1);
+
         for (int i = 0; i < s.length(); i++) {
             char a = s.charAt(i);
             char b = t.charAt(i);
-            if (map1[a] != null && map1[a] != b)
+            if (sHash[a] != -1 && sHash[a] != b)
                 return false;
-            if (map2[b] != null && map2[b] != a)
+            if (tHash[b] != -1 && tHash[b] != a)
                 return false;
-
-            map1[a] = b;
-            map2[b] = a;
+            sHash[a] = b;
+            tHash[b] = a;
         }
+
         return true;
     }
 }
