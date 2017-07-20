@@ -1,39 +1,26 @@
-// also known as postfix notation
-// time: O(n) space: O(lgn)
 public class Solution {
     public int evalRPN(String[] tokens) {
-        if (tokens == null || tokens.length == 0) return 0;
-
-        Stack<Integer> stack = new Stack<Integer>();
-        for (String token : tokens) {
-            if (getOperand(token) != null) {
-                stack.push(getOperand(token));
+        Deque<Integer> stack = new LinkedList<>();
+        String operands = "+-*/";
+        for (String s : tokens) {
+            if (operands.indexOf(s) < 0) {
+                stack.push(Integer.parseInt(s));
             } else {
-                int y = stack.pop();
-                int x = stack.pop();
-                int ret = calculate(x, y, token);
-                stack.push(ret);
+                int two = stack.pop();
+                int one = stack.pop();
+                stack.push(cal(s, one, two));
             }
         }
-
         return stack.pop();
     }
 
-    private Integer getOperand(String token) {
-        if (token.equals("*") || token.equals("/") || token.equals("+") || token.equals("-")) {
-            return null;
-        }
-        return Integer.valueOf(token);
-    }
-
-    private int calculate(int x, int y, String op) {
+    private int cal(String op, int a, int b) {
         if (op.equals("+"))
-            return x + y;
+            return a + b;
         if (op.equals("-"))
-            return x - y;
+            return a - b;
         if (op.equals("*"))
-            return x * y;
-        //if (op.equals("/"))
-        return x / y;
+            return a * b;
+        return a / b;
     }
 }
