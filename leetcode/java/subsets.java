@@ -1,30 +1,31 @@
-/* Given a set of distinct integers, nums, return all possible subsets.
- * Elements in a subset must be in non-descending order.
- * The solution set must not contain duplicate subsets.
- */
 public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
-        if (nums == null)
-            return ret;
-
-        List<Integer> entry = new ArrayList<Integer>();
-        Arrays.sort(nums);
-        helper(ret, entry, nums, 0);
+        List<List<Integer>> ret = new ArrayList<>();
+        backtrace(ret, new ArrayList<>(), nums, 0);
         return ret;
     }
 
-    private void helper(List<List<Integer>> ret, List<Integer> entry, int[] nums, int pos) {
-        if (pos >= nums.length) {
-            ret.add(new ArrayList<Integer>(entry));
+    // solution 1
+    private void backtrace(List<List<Integer>> ret, List<Integer> entry, int[] nums, int cur) {
+        if (cur == nums.length) {
+            ret.add(new ArrayList<>(entry));
             return;
         }
-
-        // skip the current element
-        helper(ret, entry, nums, pos+1);
-        // add current element into entry
-        entry.add(nums[pos]);
-        helper(ret, entry, nums, pos+1);
+        // skip current number
+        backtrace(ret, entry, nums, cur+1);
+        // add current number
+        entry.add(nums[cur]);
+        backtrace(ret, entry, nums, cur+1);
         entry.remove(entry.size()-1);
+    }
+
+    // solution 2
+    private void backtrace(List<List<Integer>> ret, List<Integer> entry, int[] nums, int start) {
+        ret.add(new ArrayList<>(entry));
+        for (int i = start; i < nums.length; i++) {
+            entry.add(nums[i]);
+            backtrace(ret, entry, nums, i+1);
+            entry.remove(entry.size()-1);
+        }
     }
 }

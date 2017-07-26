@@ -1,34 +1,36 @@
-/* Given a collection of integers that might contain duplicates, nums, return all possible subsets. 
- * Elements in a subset must be in non-descending order.
- * The solution set must not contain duplicate subsets.
- */
 public class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
-        if (nums == null)
-            return ret;
-
-        List<Integer> entry = new ArrayList<Integer>();
+        List<List<Integer>> ret = new ArrayList<>();
         Arrays.sort(nums);
-        helper(ret, entry, nums, 0);
+        backtrace(ret, new ArrayList<>(), nums, 0);
         return ret;
     }
 
-    private void helper(List<List<Integer>> ret, List<Integer> entry, int[] nums, int pos) {
-        if (pos >= nums.length) {
-            ret.add(new ArrayList<Integer>(entry));
+    // solution 1
+    private void backtrace(List<List<Integer>> ret, List<Integer> entry, int[] nums, int start) {
+        ret.add(new ArrayList<>(entry));
+        for (int i = start; i < nums.length; i++) {
+            if (i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+            entry.add(nums[i]);
+            backtrace(ret, entry, nums, i+1);
+            entry.remove(entry.size()-1);
+        }
+    }
+
+    // solution 2
+    private void backtrace(List<List<Integer>> ret, List<Integer> entry, int[] nums, int p) {
+        if (p >= nums.length) {
+            ret.add(new ArrayList<>(entry));
             return;
         }
-        // add current element to entry
-        entry.add(nums[pos]);
-        helper(ret, entry, nums, pos+1);
+
+        entry.add(nums[p]);
+        backtrace(ret, entry, nums, p+1);
         entry.remove(entry.size()-1);
 
-        // skip the current element
         // skip duplicates
-        while (pos+1 < nums.length && nums[pos] == nums[pos+1])
-            pos++;
-
-        helper(ret, entry, nums, pos+1);
+        while (p < nums.length-1 && nums[p] == nums[p+1])
+            p++;
+        backtrace(ret, entry, nums, p+1);
     }
 }

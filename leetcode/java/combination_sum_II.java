@@ -1,31 +1,21 @@
 public class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
-        List<Integer> entry = new ArrayList<Integer>();
+        List<List<Integer>> ret = new ArrayList<>();
         Arrays.sort(candidates);
-        helper(candidates, 0, target, ret, entry);
+        backtrace(ret, new ArrayList<>(), candidates, target, 0);
         return ret;
     }
 
-    private void helper(int[] candidates, int cur, int target,
-            List<List<Integer>> ret, List<Integer> entry) {
-        if (target == 0) {
-            ret.add(new ArrayList<Integer>(entry));
+    private void backtrace(List<List<Integer>> ret, List<Integer> entry, int[] nums, int t, int start) {
+        if (t <= 0) {
+            if ( t==0 ) ret.add(new ArrayList<>(entry));
             return;
         }
-
-        int i = cur;
-        while (i < candidates.length) {
-            if (candidates[i] > target)
-                return;
-
-            entry.add(candidates[i]);
-            helper(candidates, i+1, target-candidates[i], ret, entry);
-            entry.remove(entry.size() - 1);
-            // avoid duplicate solutions
-            do {
-                i++;
-            } while (i < candidates.length && candidates[i-1] == candidates[i]);
+        for (int i = start; i < nums.length; i++) {
+            if (i > start && nums[i-1] == nums[i]) continue; // skip duplicates
+            entry.add(nums[i]);
+            backtrace(ret, entry, nums, t-nums[i], i+1);
+            entry.remove(entry.size()-1);
         }
     }
 }
