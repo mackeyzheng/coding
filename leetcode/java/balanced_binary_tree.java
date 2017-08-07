@@ -8,22 +8,19 @@
  * }
  */
 public class Solution {
-    private boolean status;
     public boolean isBalanced(TreeNode root) {
-        status = true;
-        getHeight(root);
-        return status;
+        dfs(root);
+        return ret;
     }
 
-    private int getHeight(TreeNode root) {
-        if (root == null) return 0;
-
-        int left_height = getHeight(root.left);
-        int right_height = getHeight(root.right);
-        
-        if (Math.abs(left_height - right_height) > 1)
-            status = false;
-
-        return Math.max(left_height, right_height) + 1;
+    private boolean ret = true;
+    private int dfs(TreeNode node) {
+        if (!ret || node == null) return -1;
+        int left = dfs(node.left);
+        int right = dfs(node.right);
+        if (Math.abs(left - right) > 1) {
+            ret = false;
+        }
+        return 1 + Math.max(left, right);
     }
 }

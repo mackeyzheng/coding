@@ -8,25 +8,26 @@
  */
 public class Solution {
     public void connect(TreeLinkNode root) {
+        // use dummy head
+        TreeLinkNode dh = new TreeLinkNode(0);
         while (root != null) {
-            // use dummy head
-            TreeLinkNode dh = new TreeLinkNode(0);
-            TreeLinkNode cur = root;
             TreeLinkNode prev = dh;
             // while traversing the current level, initialize the next level
-            while (cur != null) {
-                if (cur.left != null) {
-                    prev.next = cur.left;
+            while (root != null) {
+                if (root.left != null) {
+                    prev.next = root.left;
                     prev = prev.next;
                 }
-                if (cur.right != null) {
-                    prev.next = cur.right;
+                if (root.right != null) {
+                    prev.next = root.right;
                     prev = prev.next;
                 }
-                cur = cur.next;
+                root = root.next;
             }
             // update root to go to next level
             root = dh.next;
+            // reset dummy head
+            dh.next = null;
         }
     }
 }
