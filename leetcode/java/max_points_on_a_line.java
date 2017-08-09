@@ -19,6 +19,7 @@ public class Solution {
         if (points == null || points.length < 3) return points.length;
 
         int ret = 0;
+        // TODO: instead of storing double, store String "x/y" as key, where x is x/=gcd(point i, j) and y is y/=gcd(point i, j)
         Map<Double, Integer> map = new HashMap<Double, Integer>(); // key: slope value: number of points
         for (int i = 0; i < points.length - 1; i++) {
             map.clear();
