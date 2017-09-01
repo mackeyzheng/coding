@@ -1,27 +1,24 @@
-public class Solution {
-    // deque: tiem O(n)
+class Solution {
+    // deque: O(n)
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if (nums == null || nums.length == 0) return new int[0];
+        if (nums == null || k <= 0)
+            return new int[0];
 
-        int[] res = new int[nums.length - k + 1];
-        Deque<Integer> deque = new ArrayDeque<>();
-
+        Deque<Integer> deque = new LinkedList<>();
+        int[] ret = new int[nums.length - k + 1];
+        int ri = 0;
         for (int i = 0; i < nums.length; i++) {
-            int cur = nums[i];
-            while (!deque.isEmpty() && cur > deque.peekLast())
+            while (!deque.isEmpty() && deque.peek() < i - k + 1)
+                deque.poll();
+
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i])
                 deque.pollLast();
 
-            deque.offer(cur);
-
-            if (i < k - 1)
-                continue;
-
-            int index = i - k + 1;
-            res[index] = deque.peekFirst();
-            if (res[index] == nums[index])
-                deque.pollFirst();
+            deque.offer(i);
+            if (i >= k - 1)
+                ret[ri++] = nums[deque.peek()];
         }
 
-        return res;
+        return ret;
     }
 }
