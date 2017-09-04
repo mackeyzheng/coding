@@ -10,6 +10,7 @@
  * }
  */
 public class Solution {
+    // change to cycle problem
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) return null;
         
@@ -42,5 +43,37 @@ public class Solution {
 
         tail.next = null;
         return p;
+    }
+
+    // solution2: calculate length
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lenA = len(headA);
+        int lenB = len(headB);
+        while (lenA > lenB) {
+            headA = headA.next;
+            lenA--;
+        }
+        
+        while (lenB > lenA) {
+            headB = headB.next;
+            lenB--;
+        }
+
+        while (headA != null && headB != null) {
+            if (headA == headB) return headA;
+            headA = headA.next;
+            headB = headB.next;
+        }
+
+        return null;
+    }
+
+    private int len(ListNode node) {
+        int ret = 0;
+        while (node != null) {
+            node = node.next;
+            ret++;
+        }
+        return ret;
     }
 }
