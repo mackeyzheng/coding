@@ -1,4 +1,5 @@
 public class Solution {
+    // time: ~O(n!)
     public List<String> generateParenthesis(int n) {
         List<String> ret = new ArrayList<String>();
         dfs(ret, "", n, n);
