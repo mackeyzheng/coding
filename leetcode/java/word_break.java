@@ -1,18 +1,14 @@
-public class Solution {
-    // brute-force: dfs, O(2^n)
-    // dp: O(n^2), O(n)
-    public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null || s.length() == 0) return true;
-        boolean[] status = new boolean[s.length()+1];
-        status[0] = true;
+class Solution {
+    // time: O(n*w) n is s.length, w is number of words in dict
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length()+1];
+        dp[0] = true;
         for (int i = 0; i < s.length(); i++) {
             for (int j = i; j >= 0; j--) {
-                if (status[j] && dict.contains(s.substring(j, i+1))) {
-                    status[i+1] = true;
-                    break;
-                }
+                dp[i+1] = dp[j] && wordDict.contains(s.substring(j, i+1)); // O(words)
+                if (dp[i+1]) break;
             }
         }
-        return status[s.length()];
+        return dp[s.length()];
     }
 }

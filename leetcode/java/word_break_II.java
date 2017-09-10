@@ -1,6 +1,34 @@
 public class Solution {
-    // use dfs directly will exceed time limit
-    // dp: record status where the cut is valid
+    // solution1: DFS + memo (hashmap)
+    // use HashMap to save the previous results to prune duplicated branches
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        return dfs(s, wordDict, new HashMap<>());
+    }
+
+    private List<String> dfs(String s, List<String> wordDict, Map<String, List<String>> map) {
+        if (map.containsKey(s))
+            return map.get(s);
+
+        List<String> ret = new ArrayList<>();
+        if (s.length() == 0) {
+            ret.add("");
+            return ret;
+        }
+
+        for (String word : wordDict) {
+            if (s.startsWith(word)) {
+                List<String> sublist = dfs(s.substring(word.length()), wordDict, map);
+                for (String sub : sublist)
+                    ret.add(word + (sub.isEmpty() ? "" : " ") + sub);
+            }
+        }
+
+        map.put(s, ret);
+        return ret;
+    }
+
+    // solution2: dp
+    // f[i]: record status where the cut is valid, f[i] means if leftpart to i is valid
     // status[i][j]: s[i,j) is a valid word
     // dfs: find the solution
     public List<String> wordBreak(String s, Set<String> dict) {
@@ -40,24 +68,5 @@ public class Solution {
                 entry.remove(entry.size()-1);
             }
         }
-
-//        generating from the head to tail will exceed time limit
-//        instead, generate from the tail to head
-//
-//        if (cur == s.length()) {
-//            StringBuilder sb = new StringBuilder();
-//            for (int i = 0; i < entry.length(); i++)
-//                sb.append(entry.get(i) + " ");
-//            ret.add(sb.toString().trim());
-//            return;
-//        }
-//
-//        for (int i = cur+1; i <= s.length(); i++) {
-//            if (status[cur][i]) {
-//                entry.add(s.substring(cur, i));
-//                dfs(ret, entry, s, status, i);
-//                entry.remove(entry.size()-1);
-//            }
-//        }
     }
 }
