@@ -1,20 +1,30 @@
 class Solution {
     public int threeSumSmaller(int[] nums, int target) {
+        int res = 0;
+        if (nums == null || nums.length < 3) {
+            return res;
+        }
         Arrays.sort(nums);
-        int ret = 0;
+        int prev = nums.length - 1;
         for (int i = 0; i < nums.length - 2; i++) {
-            if (nums[i] + nums[i+1] + nums[i+2] >= target) break;
-            int p = i + 1;
-            int q = nums.length - 1;
-            while (p < q) {
-                if (nums[i] + nums[p] + nums[q] < target) {
-                    ret += q - p;
-                    p++;
+            int j = i + 1;
+            int k = prev;
+            if (i >= k - 1) {
+                break;
+            }
+            while (j < k && nums[i] + nums[j] + nums[k] >= target) {
+                k--;
+                prev = k;
+            }
+            while (j < k) {
+                if (nums[i] + nums[j] + nums[k] < target) {
+                    res += k - j;
+                    j++;
                 } else {
-                    q--;
+                    k--;
                 }
             }
         }
-        return ret;
+        return res;
     }
 }

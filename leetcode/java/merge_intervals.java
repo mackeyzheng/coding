@@ -8,7 +8,8 @@
  * }
  */
 public class Solution {
-    // solution2, time: O(nlgn)
+    // solution3, time: O(nlgn)
+    // based on solution2, improved by skiping some interations
     public List<Interval> merge(List<Interval> intervals) {
         if (intervals == null || intervals.size() < 2) return intervals;
 
@@ -34,31 +35,48 @@ public class Solution {
         return ret;
     }
 
-    // solution1, time: O(nlgn)
+    // solution2, time: O(nlgn)
+    // java arrays.sort is Dual-Pivot Quicksort, O(nlgn)
     public List<Interval> merge(List<Interval> intervals) {
-        if (intervals == null || intervals.size() < 2) return intervals;
-
-        // O(nlgn)
-        intervals.sort(new Comparator<Interval>() {
-            public int compare(Interval a, Interval b) {
-                return a.start - b.start;
-            }
-        });
-
-        List<Interval> ret = new ArrayList<>();
-        ret.add(intervals.get(0));
-        // O(n)
+        List<Interval> res = new ArrayList<>();
+        if (intervals == null || intervals.size() == 0) return res;
+        int[] start = new int[intervals.size()];
+        int[] end = new int[intervals.size()];
+        for (int i = 0; i < intervals.size(); i++) {
+            start[i] = intervals.get(i).start;
+            end[i] = intervals.get(i).end;
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        Interval cur = new Interval(start[0], end[0]);
+        res.add(cur);
         for (int i = 1; i < intervals.size(); i++) {
-            Interval a = ret.get(ret.size()-1);
-            Interval b = intervals.get(i);
-            if (b.start <= a.end) {
-                // overlap, then merge
-                a.end = Math.max(a.end, b.end);
+            if (start[i] > cur.end) {
+                cur = new Interval(start[i], end[i]);
+                res.add(cur);
             } else {
-                ret.add(b);
+                cur.end = Math.max(cur.end, end[i]);
             }
         }
+        return res;
+    }
 
-        return ret;
+    // solution1, time: O(nlgn)
+    // java list sort - performance similar to merge sort
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> res = new ArrayList<>();
+        if (intervals == null || intervals.size() == 0) return res;
+        intervals.sort((a, b) -> a.start - b.start);
+        int p = 0;
+        res.add(intervals.get(0));
+        for (int q = 1; q < intervals.size(); q++) {
+            if (res.get(p).end < intervals.get(q).start) {
+                res.add(intervals.get(q));
+                p++;
+            } else {
+                res.get(p).end = Math.max(res.get(p).end, intervals.get(q).end);
+            }
+        }
+        return res;
     }
 }
