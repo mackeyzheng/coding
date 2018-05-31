@@ -2,27 +2,28 @@ class Solution {
     // time: O(n)  space: O(1)
     // two pointer
     public int trap(int[] height) {
-        if (height == null || height.length < 3) return 0;
-        int p = 0;
-        int q = height.length - 1;
-        int maxLeft = 0;
-        int maxRight = 0;
+        if (height.length < 3) return 0;
+        int leftWall = height[0];
+        int rightWall = height[height.length-1];
+        int p = 1;
+        int q = height.length-2;
         int sum = 0;
         while (p <= q) {
-            if (height[p] <= height[q]) {
-                // right bar is higher
-                if (height[p] >= maxLeft)
-                    maxLeft = height[p];
-                else
-                    sum += maxLeft - height[p];
+            if (leftWall <= rightWall) {
+                // right wall is higher
+                if (leftWall > height[p]) {
+                    sum += leftWall - height[p];
+                } else {
+                    leftWall = height[p];
+                }
                 p++;
-
             } else {
-                // left bar is higher
-                if (height[q] >= maxRight)
-                    maxRight = height[q];
-                else
-                    sum += maxRight - height[q];
+                // left wall is higher
+                if (rightWall > height[q]) {
+                    sum += rightWall - height[q];
+                } else {
+                    rightWall = height[q];
+                }
                 q--;
             }
         }
