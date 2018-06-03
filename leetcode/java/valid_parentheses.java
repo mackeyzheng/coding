@@ -1,19 +1,41 @@
-public class Solution {
+class Solution {
+    // solution2
+    // optimization:
+    //   1. use array as a stack, instead of linked list
+    //   2. the array size only needs to be s.length() / 2
+    //   3. store index, instead of character itself
     public boolean isValid(String s) {
-        if (s == null || s.length() == 0) return true;
-
-        Stack<Integer> stack = new Stack<Integer>();
-        String left = "{[(";
-        String right = "}])";
-        for (char it : s.toCharArray()) {
-            if (left.indexOf(it) > -1) {
-                stack.push(left.indexOf(it));
+        int[] stack = new int[s.length()/2];
+        int pos = -1;
+        String left = "({[";
+        String right = ")}]";
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int leftIndex = left.indexOf(c);
+            if (leftIndex >= 0) {
+                if (++pos >= stack.length) return false;
+                stack[pos] = leftIndex;
             } else {
-                if (stack.isEmpty() || stack.pop() != right.indexOf(it))
-                    return false;
+                if (pos < 0 || stack[pos] != right.indexOf(c)) return false;
+                pos--;
             }
         }
+        return pos < 0;
+    }
 
+    // solution1
+    public boolean isValid(String s) {
+        Deque<Character> stack = new LinkedList<>();
+        String left = "({[";
+        String right = ")}]";
+        for (char c : s.toCharArray()) {
+            if (left.indexOf(c) >= 0) {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) return false;
+                if (left.indexOf(stack.pop()) != right.indexOf(c)) return false;
+            }
+        }
         return stack.isEmpty();
     }
 }

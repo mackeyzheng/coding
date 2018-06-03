@@ -1,4 +1,7 @@
 public class Solution {
+    // assumptions:
+    //   1.words are separated by a single space
+    //   2.no leading or trailing spaces
     // ABCD -> (ABCD)' = D'C'B'A' -> DCBA
     public void reverseWords(char[] s) {
         // reverse whole sentence
