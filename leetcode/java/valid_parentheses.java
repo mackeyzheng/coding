@@ -1,4 +1,7 @@
 class Solution {
+    // another solution
+    // stack store expected right part, instead of left
+
     // solution2
     // optimization:
     //   1. use array as a stack, instead of linked list

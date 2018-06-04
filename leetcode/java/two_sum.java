@@ -14,12 +14,7 @@ class Solution {
             map.putIfAbsent(nums[i], i);
         }
         return res;
-    }
-
-    // two pointer
-    // O(nlgn), O(1)
-    public int[] twoSum(int[] nums, int target) {
-        int[] res = new int[2];
-        
+        // better to throw exception in error case
+        //throw new IllegalArgumentException("no solution");
     }
 }

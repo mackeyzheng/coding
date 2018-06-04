@@ -4,6 +4,7 @@ public class Solution {
     //   2.no leading or trailing spaces
     // ABCD -> (ABCD)' = D'C'B'A' -> DCBA
     public void reverseWords(char[] s) {
+        // corner case: s == null, need to check with interviewer
         // reverse whole sentence
         reverse(s, 0, s.length - 1);
         // reverse each word
