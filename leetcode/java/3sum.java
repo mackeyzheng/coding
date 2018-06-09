@@ -1,26 +1,29 @@
 class Solution {
     // O(N^2)
     public List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 3) {
+            return res;
+        }
+        Arrays.sort(nums);
         for (int i = 0; i < nums.length-2; i++) {
             // skip duplicate
             if (i > 0 && nums[i] == nums[i-1]) continue;
-            int p = i + 1;
-            int q = nums.length - 1;
-            while (p < q) {
-                int sum = nums[i] + nums[p] + nums[q];
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
                 if (sum == 0) {
-                    res.add(Arrays.asList(nums[i], nums[p], nums[q]));
+                    res.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     // skip duplicate
-                    while (p < q && nums[p] == nums[p+1]) p++;
-                    while (p < q && nums[q] == nums[q-1]) q--;
-                    p++;
-                    q--;
+                    while (j < k && nums[j] == nums[j+1]) j++;
+                    while (j < k && nums[k] == nums[k-1]) k--;
+                    j++;
+                    k--;
                 } else if (sum < 0) {
-                    p++;
+                    j++;
                 } else {
-                    q--;
+                    k--;
                 }
             }
         }

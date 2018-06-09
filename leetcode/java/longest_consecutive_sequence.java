@@ -56,7 +56,7 @@ public class Solution {
 		return max;
 	}
 
-    // solution1: similar to merge intervals
+    // solution1: union find idea, similar to merge intervals
 	// time: O(n)  space: O(n)
     public int longestConsecutive(int[] nums) {
         Map<Integer, Bucket> map = new HashMap<>();
