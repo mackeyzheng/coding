@@ -1,4 +1,5 @@
 public class Solution {
+    // solution2: find lower and next to the upper
     public int[] searchRange(int[] nums, int target) {
         int[] ret = {-1, -1};
         // find the lower bound
@@ -38,4 +39,38 @@ public class Solution {
 
         return s;
     }
+
+    // solution1: find lower and upper
+    public int[] searchRange(int[] nums, int target) {
+        int lower = findLower(nums, 0, nums.length-1, target);
+        if (lower == -1) return new int[]{-1, -1};
+        int upper = findUpper(nums, lower, nums.length-1, target);
+        return new int[]{lower, upper};
+    }
+
+    private int findLower(int[] nums, int s, int e, int target) {
+        while (s < e) {
+            int m = s + (e - s) / 2;
+            if (nums[m] < target) {
+                s = m + 1;
+            } else {
+                e = m;
+            }
+        }
+        // use s point, nums[e] may OutOfBound, for example nums.length = 0
+        return s == e && nums[s] == target ? s : -1;
+    }
+
+    private int findUpper(int[] nums, int s, int e, int target) {
+        while (s < e - 1) {
+            int m = s + (e - s) / 2;
+            if (nums[m] != target) {
+                e = m -1;
+            } else {
+                s = m;
+            }
+        }
+        return s == e - 1 && nums[e] == target ? e : s;
+    }
+
 }
