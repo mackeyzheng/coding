@@ -8,24 +8,28 @@
  * }
  */
 public class Solution {
-//	// solution1
-//	public List<Integer> inorderTraversal(TreeNode root) {
-//		List<Integer> ret = new ArrayList<Integer>();
-//		Stack<TreeNode> stack = new Stack<TreeNode>();
-//		TreeNode cur = root;
-//		while (!stack.isEmpty() || cur != null) {
-//			while (cur != null) {
-//				stack.push(cur);
-//				cur = cur.left;
-//			}
-//			cur = stack.pop();
-//			ret.add(cur.val);
-//			cur = cur.right;
-//		}
-//
-//		return ret;
-//	}
+    // solution1: stack
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        pushAllLeft(root, stack);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            res.add(cur.val);
+            pushAllLeft(cur.right, stack);
+        }
+        return res;
+    }
 
+    private void pushAllLeft(TreeNode node, Deque<TreeNode> stack) {
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+
+    // solution2: morris algorithm
 	public List<Integer> inorderTraversal(TreeNode root) {
 		List<Integer> ret = new ArrayList<Integer>();
 		TreeNode cur = root;

@@ -49,4 +49,39 @@ class Solution {
         cur.right = deleteNode(cur.right, cur.val);
         return dh.left;
     }
+
+    // clean version
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            // key == root.val
+            // delete current root node
+            if (root.left == null) {
+                // replace root with root.right
+                return root.right;
+            } else if (root.right == null) {
+                // replace root with root.left
+                return root.left;
+            }
+            TreeNode node = findSuccessor(root);
+            root.val = node.val;
+            root.right = deleteNode(root.right, root.val);
+        }
+        return root;
+    }
+
+    private TreeNode findSuccessor(TreeNode node) {
+        if (node == null || node.right == null) return null;
+        TreeNode p = node.right;
+        while (p.left != null) {
+            p = p.left;
+        }
+        return p;
+    }
 }
