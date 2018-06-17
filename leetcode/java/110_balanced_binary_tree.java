@@ -7,19 +7,19 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public boolean isBalanced(TreeNode root) {
-        dfs(root);
-        return ret;
+        height(root);
+        return balanced;
     }
 
-    private boolean ret = true;
-    private int dfs(TreeNode node) {
-        if (!ret || node == null) return -1;
-        int left = dfs(node.left);
-        int right = dfs(node.right);
+    private boolean balanced = true;;
+    private int height(TreeNode node) {
+        if (!balanced || node == null) return -1;
+        int left = height(node.left);
+        int right = height(node.right);
         if (Math.abs(left - right) > 1) {
-            ret = false;
+            balanced = false;
         }
         return 1 + Math.max(left, right);
     }

@@ -13,13 +13,8 @@ public class Solution {
     }
 
     private int dfs(TreeNode root, int sum) {
-        if (root == null)
-            return 0;
-
+        if (root == null) return 0;
         sum = sum * 10 + root.val;
-        if (root.left == null && root.right == null)
-            return sum;
-        else
-            return dfs(root.left, sum) + dfs(root.right, sum);
+        return root.left == null && root.right == null ? sum : dfs(root.left, sum) + dfs(root.right, sum);
     }
 }
