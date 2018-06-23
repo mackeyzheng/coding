@@ -16,7 +16,7 @@ public class UnionFind {
         return parent;
     }
 
-    // compressed find, time: worst O(n), average O(1)
+    // compressed find, time: worst O(n), average O(lgn)
     public int compressedFind(int x) {
         // same as brute force find
         int parent = father.get(x);
