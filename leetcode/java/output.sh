@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cat solution.java | pbcopy
+cat ${1:-solution.java} | pbcopy

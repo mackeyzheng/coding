@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pbpaste | cat > solution.java
+pbpaste | cat > ${1:-solution.java}
