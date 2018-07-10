@@ -8,7 +8,7 @@ public class Solution {
             if (1 <= nums[i] && nums[i] <= nums.length  // validate nums[i]
                     && nums[i] - 1 != i                 // confirm current value should be swaped
                     && nums[nums[i]-1] != nums[i]) {    // confirm the value at the position to be swaped to is also invalid
-                                                        // avoid dead loop like {1, 1}
+                                                        // avoid infinite loop like {1, 1}
                 // swap
                 int tmp = nums[i];
                 nums[i] = nums[tmp-1];
