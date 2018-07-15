@@ -12,7 +12,7 @@
  * Recover the tree without changing its structure.
  */
 public class Solution {
-    // inorder traversal using Morris algorithm
+    // solution2: inorder traversal using Morris algorithm
     public void recoverTree(TreeNode root) {
         TreeNode cur = root;
         TreeNode prev = null; // previous node on the inorder traversal path
@@ -54,5 +54,42 @@ public class Solution {
             } // notice here, do not use else, in case that {0, 1}, then cache[1] will not be initialized
             cache[1] = cur;
         }
+    }
+
+
+    // solution1: inorder recursively
+    public void recoverTree(TreeNode root) {
+        TreeNode[] cache = new TreeNode[2];
+        traverse(root, cache);
+        if (cache[1] != null) {
+            // swap
+            int tmp = cache[0].val;
+            cache[0].val = cache[1].val;
+            cache[1].val = tmp;
+        }
+    }
+
+    private TreeNode prev = null;
+
+    // cannot put prev to traverse method signature, only copy of its reference is passed
+    private void traverse(TreeNode node, TreeNode[] cache) {
+        if (node == null) {
+            return;
+        }
+
+        traverse(node.left, cache);
+
+        if (prev != null) {
+            if (prev.val > node.val) {
+                if (cache[0] == null) {
+                    cache[0] = prev;
+                }
+                cache[1] = node;
+            }
+        }
+
+        prev = node;
+
+        traverse(node.right, cache);
     }
 }
