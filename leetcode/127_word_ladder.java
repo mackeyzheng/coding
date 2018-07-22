@@ -6,9 +6,13 @@ class Solution {
         if (!words.contains(endWord)) {
             return 0;
         }
+
+        // mark beginWord and endWord as visited
         words.remove(beginWord);
         words.remove(endWord);
 
+        // BFS from two ends
+        // because it needs to judge if two bfs cross, so it needs to use hashmap
         Set<String> beginSide = new HashSet<>();
         Set<String> endSide = new HashSet<>();
         beginSide.add(beginWord); // begin
@@ -42,7 +46,7 @@ class Solution {
                         return true;
                     }
                     if (words.contains(newWord)) {
-                        words.remove(newWord);
+                        words.remove(newWord); // mark as visited
                         next.add(newWord);
                     }
                 }
