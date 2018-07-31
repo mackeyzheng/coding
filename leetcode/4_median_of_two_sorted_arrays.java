@@ -20,9 +20,9 @@ class Solution {
         int bk = k - ak;
 
         if (a[as+ak-1] > b[bs+bk-1])
-            return helper(a, as, alen, b, bs+bk, blen-bk, k-bk);
+            return helper(a, as, ak, b, bs+bk, blen-bk, k-bk);
         if (a[as+ak-1] < b[bs+bk-1])
-            return helper(a, as+ak, alen-ak, b, bs, blen, k-ak);
+            return helper(a, as+ak, alen-ak, b, bs, bk, k-ak);
         return a[as+ak-1];
     }
 }
