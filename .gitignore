@@ -1,3 +1,8 @@
+!.gitignore
+
+# Mac OS X
 .DS_Store
+
+### temporary solution file
 solution.java
 solution.py

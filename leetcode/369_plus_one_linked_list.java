@@ -7,6 +7,35 @@
  * }
  */
 class Solution {
+    // reverse twice
+    public ListNode plusOne(ListNode head) {
+        ListNode preHead = reverse(head);
+        ListNode cur = preHead;
+        int carry = 1;
+        while (cur.next != null && carry != 0) {
+            int sum = cur.next.val + carry;
+            carry = sum / 10;
+            cur.next.val = sum % 10;
+            cur = cur.next;
+        }
+        if (carry != 0) {
+            cur.next = new ListNode(carry);
+        }
+        return reverse(preHead.next).next;
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode dh = new ListNode(0);
+        dh.next = head;
+        while (head.next != null) {
+            ListNode cur = head.next;
+            head.next = cur.next;
+            cur.next = dh.next;
+            dh.next = cur;
+        }
+        return dh;
+    }
+
     // recursive
     public ListNode plusOne(ListNode head) {
         if (helper(head) == 1) {
