@@ -8,7 +8,7 @@ class Solution {
         if (n == 0) return 0;
         if (cache[n - 1] > 0) return cache[n - 1];
         int i = 1;
-        int minVal = Integer.MAX_VALUE;
+        int minVal = n; // at most n steps
         while (i * i <= n) {
             minVal = Math.min(minVal, helperTopDown(n - i * i, cache) + 1);
             i++;
