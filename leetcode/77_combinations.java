@@ -10,7 +10,7 @@ class Solution {
             res.add(new ArrayList<>(entry));
             return;
         }
-        for (int i = s; i <= n-k+1; i++) {
+        for (int i = s; i <= n-k+1; i++) { // optimization at i's upper bound
             entry.add(i);
             dfs(n, k-1, i+1, entry, res);
             entry.remove(entry.size()-1);
