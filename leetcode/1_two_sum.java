@@ -9,12 +9,11 @@ class Solution {
             if (map.containsKey(diff)) {
                 res[0] = map.get(diff);
                 res[1] = i;
-                break;
+                return res;
             }
-            map.putIfAbsent(nums[i], i);
+            map.put(nums[i], i);
         }
-        return res;
+        throw new RuntimeException("no solution");
         // better to throw exception in error case
-        //throw new IllegalArgumentException("no solution");
     }
 }

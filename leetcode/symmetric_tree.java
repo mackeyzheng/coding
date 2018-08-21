@@ -11,7 +11,7 @@ public class Solution {
     // iteratively
     public boolean isSymmetric(TreeNode root) {
         if (root == null) return true;
-        Deque<TreeNode> stack = new LinkedList<>();
+        Deque<TreeNode> stack = new LinkedList<>(); // LinkedList allows null value, while ArrayDeque does not
         stack.push(root.right);
         stack.push(root.left);
         while (!stack.isEmpty()) {

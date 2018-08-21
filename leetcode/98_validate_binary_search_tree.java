@@ -9,7 +9,7 @@
  */
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        return isValidBST(root, null, null); // need to handle integer corner case: MAX_VALUE and MIN_VALUE 
+        return isValidBST(root, null, null); // need to handle integer corner case: MAX_VALUE and MIN_VALUE
     }
 
     public boolean isValidBST(TreeNode root, Integer min, Integer max) {
