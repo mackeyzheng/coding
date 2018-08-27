@@ -41,7 +41,7 @@ public class Solution {
 
 		return ret;
 	}
-	
+
 	private void visit(TreeNode from, TreeNode to, List<Integer> ret) {
 		reverse(from, to);
 
@@ -50,7 +50,7 @@ public class Solution {
 		while (p != null) {
 			ret.add(p.val);
 			p = p.right;
-		} 
+		}
 
 		reverse(to, from);
 	}
@@ -69,37 +69,58 @@ public class Solution {
 			x = y;
 			y = z;
 		}
+    }
+
+    // iterative
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ret = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        if (root != null) stack.push(root);
+        TreeNode prev = null;
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.peek();
+            if ((cur.left == null && cur.right == null) || // leaf node
+                (cur.left != null && cur.left == prev || cur.right != null && cur.right == prev)) { // prev is a child of cur
+                ret.add(cur.val);
+                stack.pop();
+            } else {
+                if (cur.right != null) stack.push(cur.right);
+                if (cur.left != null) stack.push(cur.left);
+            }
+            prev = cur;
+        }
+        return ret;
+    }
+
+
+	public List<Integer> postorderTraversal(TreeNode root) {
+		List<Integer> ret = new ArrayList<Integer>();
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		TreeNode cur = root;
+		TreeNode prev = null;
+
+		// handle a subtree per loop
+		do {
+			while (cur != null) {
+				stack.push(cur);
+				cur = cur.left;
+			}
+
+			prev = null;
+			while (!stack.isEmpty()) {
+				cur = stack.peek();
+				if (cur.right == prev) {
+					ret.add(cur.val);
+					prev = cur;
+					stack.pop();
+				} else {
+					cur = cur.right;
+					break;
+				}
+			}
+		} while (!stack.isEmpty());
+
+		return ret;
 	}
-
-
-//	public List<Integer> postorderTraversal(TreeNode root) {
-//		List<Integer> ret = new ArrayList<Integer>();
-//		Stack<TreeNode> stack = new Stack<TreeNode>();
-//		TreeNode cur = root;
-//		TreeNode prev = null;
-//		
-//		// handle a subtree per loop
-//		do {
-//			while (cur != null) {
-//				stack.push(cur);
-//				cur = cur.left;
-//			}
-//
-//			prev = null;
-//			while (!stack.isEmpty()) {
-//				cur = stack.peek();
-//				if (cur.right == prev) {
-//					ret.add(cur.val);
-//					prev = cur;
-//					stack.pop();
-//				} else {
-//					cur = cur.right;
-//					break;
-//				}
-//			}
-//		} while (!stack.isEmpty());
-//
-//		return ret;
-//	}
 
 }

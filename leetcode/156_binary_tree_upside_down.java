@@ -8,6 +8,25 @@
  * }
  */
 public class Solution {
+    // recursive
+    private TreeNode ret;
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        traverse(root);
+        return ret;
+    }
+
+    private void traverse(TreeNode root) {
+        if (root == null || root.left == null) {
+            ret = root;
+            return;
+        }
+        traverse(root.left);
+        root.left.left = root.right;
+        root.left.right = root;
+        root.left = null;
+        root.right = null;
+    }
+
     // time: O(n), space: O(1)
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode parent = null;

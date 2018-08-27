@@ -37,7 +37,7 @@ public class Solution {
 // public class Solution {
 //     public ListNode rotateRight(ListNode head, int k) {
 //         if (head == null | k == 0) return head;
-// 
+//
 //         ListNode dh = new ListNode(0);
 //         dh.next = head;
 //         ListNode p = dh;
@@ -46,19 +46,19 @@ public class Solution {
 //             p = p.next;
 //             len++;
 //         }
-// 
+//
 //         // refine k
 //         k = len - k % len;
 //         ListNode q = dh;
 //         while (k-- > 0) {
 //             q = q.next;
 //         }
-// 
+//
 //         // rotate
 //         p.next = dh.next;
 //         dh.next = q.next;
 //         q.next = null;
-// 
+//
 //         return dh.next;
 //     }
 // }
