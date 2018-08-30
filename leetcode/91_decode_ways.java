@@ -1,6 +1,25 @@
 public class Solution {
     // dp
     public int numDecodings(String s) {
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= s.length(); i++) {
+            char cur = s.charAt(i - 1);
+            if (cur != '0') {
+                dp[i] += dp[i - 1];
+            }
+            if (i - 1 > 0) {
+                char prev = s.charAt(i - 2);
+                if (prev == '1' || (prev == '2' && cur >= '0' && cur <= '6')) {
+                    dp[i] += dp[i - 2];
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
+    // dp + rolling array
+    public int numDecodings(String s) {
         if (s == null || s.length() == 0) return 0;
         final int N = s.length();
         int[] dp = new int[3];
@@ -29,7 +48,7 @@ public class Solution {
 				cur = 0;
 			}
 
-			if (i < 1 || !(s.charAt(i - 1) == '1' 
+			if (i < 1 || !(s.charAt(i - 1) == '1'
 					  || (s.charAt(i - 1) == '2' && s.charAt(i) <= '6'))) {
 				prev = 0;
 			}
