@@ -2,6 +2,7 @@ class Solution {
     // dp + binary search: O(nlgn) - in dp array, find the first number that is equal or larger to nums[i]
     // 1. if not exist, append nums[i] to the end of dp array
     // 2. if exist at position k, set dp[k] = nums[i]
+    // https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
         int len = 0;
