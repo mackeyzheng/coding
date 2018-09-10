@@ -1,5 +1,6 @@
 class Solution {
     // bucket sort: O(n)
+    // no need to sort the entire array, consider each h-index possible value as a bucket
     public int hIndex(int[] citations) {
         final int N = citations.length;
         int[] count = new int[N+1];
@@ -17,6 +18,8 @@ class Solution {
     }
 
     // quick-sort: O(nlgn)
+    // note that h's range is [0, N]
+    // after sorting, at position i, the maximum possible h-index is N - i
     public int hIndex(int[] citations) {
         if (citations == null || citations.length == 0) {
             return 0;

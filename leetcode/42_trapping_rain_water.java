@@ -1,33 +1,23 @@
 class Solution {
-    // time: O(n)  space: O(1)
-    // two pointer
+    // two pointer - O(n), O(1), keep moving left and right max
     public int trap(int[] height) {
-        if (height.length < 3) return 0;
-        int leftWall = height[0];
-        int rightWall = height[height.length-1];
-        int p = 1;
-        int q = height.length-2;
-        int sum = 0;
+        int ret = 0;
+        int p = 0;
+        int q = height.length - 1;
+        int leftMax = 0;
+        int rightMax = 0;
         while (p <= q) {
-            if (leftWall <= rightWall) {
-                // right wall is higher
-                if (leftWall > height[p]) {
-                    sum += leftWall - height[p];
-                } else {
-                    leftWall = height[p];
-                }
+            leftMax = Math.max(leftMax, height[p]);
+            rightMax = Math.max(rightMax, height[q]);
+            if (leftMax < rightMax) {
+                ret += leftMax - height[p];
                 p++;
             } else {
-                // left wall is higher
-                if (rightWall > height[q]) {
-                    sum += rightWall - height[q];
-                } else {
-                    rightWall = height[q];
-                }
+                ret += rightMax - height[q];
                 q--;
             }
         }
-        return sum;
+        return ret;
     }
 
     // time: O(n)  space: O(n)

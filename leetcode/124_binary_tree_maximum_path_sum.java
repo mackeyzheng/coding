@@ -20,7 +20,9 @@ class Solution {
         int leftSum = maxSum(node.left);
         int rightSum = maxSum(node.right);
         // max local sum ending at current node
+        // localSum takes max from 1 or 2 node's sum case: 1 - left, right, node.val 2 - left + node.val, right + node.val
         int localSum = Math.max(node.val, Math.max(leftSum, rightSum) + node.val);
+        // global max take max from 1, 2, or 3 node's sum case: 3 - left + right + node.val
         max = Math.max(max, Math.max(localSum, leftSum + rightSum + node.val));
         return localSum;
     }

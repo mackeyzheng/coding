@@ -1,5 +1,5 @@
 class Solution {
-    // binary search
+    // binary search by h range
     public int hIndex(int[] citations) {
         final int N = citations.length;
         // h -> [0,...,N]

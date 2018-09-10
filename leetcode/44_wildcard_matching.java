@@ -1,4 +1,24 @@
 public class Solution {
+    // solution2: 2d DP, O(mn)
+    public boolean isMatch(String s, String p) {
+        final int M = p.length();
+        final int N = s.length();
+        boolean[][] dp = new boolean[M + 1][N + 1];
+        dp[0][0] = true;
+        for (int i = 1; i <= M; i++) {
+            char c = p.charAt(i - 1);
+            dp[i][0] = c == '*' && dp[i - 1][0];
+            for (int j = 1; j <= N; j++) {
+                if (c == '*') {
+                    dp[i][j] = dp[i][j - 1] || dp[i - 1][j]; // note that dp[i - 1][0,1,...,j-1] = dp[i][j-1]
+                } else {
+                    dp[i][j] = (c == '?' || c == s.charAt(j - 1)) && dp[i - 1][j - 1];
+                }
+            }
+        }
+        return dp[M][N];
+    }
+
     // solution1: O(n), O(1)
     /* if p[j] == '*'
      *      isMatch(i, j) = isMatch(i, j+1) || isMatch(i+1, j+1) || ... || isMatch(i+n, j+1)
