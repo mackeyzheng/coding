@@ -1,4 +1,7 @@
 class Solution {
+    // The greedy algorithm is that in each step, select the char with highest remaining count if possible
+    // (if it is not in the waiting queue). PQ is used to achieve the greedy.
+    // A regular queue waitQueue is used to "freeze" previous appeared char in the period of k.
     public String rearrangeString(String s, int k) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray())
