@@ -7,19 +7,22 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     // bottom up, all leaves are at the bottom level (height == 0)
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> ret = new ArrayList<>();
-        help(root, ret);
+        dfs(root, ret);
         return ret;
     }
 
-    private int help(TreeNode node, List<List<Integer>> ret) {
-        if (node == null) return -1;
-        int height = 1 + Math.max(help(node.left, ret), help(node.right, ret));
+    private int dfs(TreeNode node, List<List<Integer>> ret) {
+        if (node == null)
+            return -1;
+        int left = dfs(node.left, ret);
+        int right = dfs(node.right, ret);
+        int height = Math.max(left, right) + 1;
         if (height >= ret.size()) {
-            ret.add(new ArrayList<Integer>());
+            ret.add(new ArrayList<>());
         }
         ret.get(height).add(node.val);
         return height;

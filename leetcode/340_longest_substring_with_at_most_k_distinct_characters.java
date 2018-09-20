@@ -3,16 +3,19 @@ class Solution {
     // use num to track the number of distinct characters within the slide window
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int[] count = new int[256];
-        int num = 0;
-        int i = 0;
+        int len = 0;
+        int j = 0;
         int ret = 0;
-        for (int j = 0; j < s.length(); j++) {
-            if (count[s.charAt(j)]++ == 0) num++;
-            if (num > k) {
-                while (--count[s.charAt(i++)] > 0);
-                num--;
+        for (int i = 0; i < s.length(); i++) {
+            if (count[s.charAt(i)]++ == 0) {
+                len++;
             }
-            ret = Math.max(ret, j - i + 1);
+            while (len > k) {
+                if (--count[s.charAt(j++)] == 0) {
+                    len--;
+                }
+            }
+            ret = Math.max(ret, i - j + 1);
         }
         return ret;
     }
