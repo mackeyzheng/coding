@@ -21,7 +21,7 @@
 //
 // bottom-up: time O(n), space O(lgn)
 // build the tree bottom-up: left child, parent, right child (similar to inorder)
-public class Solution {
+class Solution {
     public TreeNode sortedListToBST(ListNode head) {
         // first calculate the list length
         ListNode p = head;
@@ -60,5 +60,33 @@ public class Solution {
         node.right = rightchild.t;
 
         return new Element(rightchild.l, node); // rightchild.l is the latest version
+    }
+
+    // clean version
+    public TreeNode sortedListToBST(ListNode head) {
+        listHead = head;
+        int len = 0;
+        ListNode p = head;
+        while (p != null) {
+            p = p.next;
+            len++;
+        }
+        return convert(0, len - 1);
+    }
+
+    private ListNode listHead = null;
+
+    private TreeNode convert(int s, int e) {
+        if (s > e) {
+            return null;
+        }
+        int m = s + (e - s) / 2;
+        TreeNode left = convert(s, m - 1);
+        TreeNode cur = new TreeNode(listHead.val);
+        listHead = listHead.next;
+        TreeNode right = convert(m + 1, e);
+        cur.left = left;
+        cur.right = right;
+        return cur;
     }
 }
