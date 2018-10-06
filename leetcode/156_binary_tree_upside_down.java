@@ -8,26 +8,22 @@
  * }
  */
 public class Solution {
-    // recursive
-    private TreeNode ret;
+    // build top-down, recursive
     public TreeNode upsideDownBinaryTree(TreeNode root) {
-        traverse(root);
-        return ret;
-    }
-
-    private void traverse(TreeNode root) {
         if (root == null || root.left == null) {
-            ret = root;
-            return;
+            return root;
         }
-        traverse(root.left);
-        root.left.left = root.right;
-        root.left.right = root;
+        TreeNode left = upsideDownBinaryTree(root.left);
+        TreeNode node = root.left;
+        node.left = root.right;
+        node.right = root;
+        // reset root's children
         root.left = null;
         root.right = null;
+        return left;
     }
 
-    // time: O(n), space: O(1)
+    // build bottom-up, time: O(n), space: O(1)
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         TreeNode parent = null;
         TreeNode parentRight = null;

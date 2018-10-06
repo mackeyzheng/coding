@@ -19,12 +19,18 @@ class Solution {
 
     // curLen is to avoid empty subset when curSum is 0
     private boolean canPartition(int[] nums, int pos, int k, int curSum, int curLen, int target, boolean[] visited) {
+        // the remaining elements are the last set
         if (k == 1) {
             return true;
         }
+
+        // find a set sums to target
         if (curSum == target && curLen > 0) {
+            // find next set from the start point of the nums array
             return canPartition(nums, 0, k - 1, 0, 0, target, visited);
         }
+
+        // find next element for the current set from pos position
         for (int i = pos; i < nums.length; i++) {
             if (visited[i]) {
                 continue;

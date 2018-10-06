@@ -9,34 +9,31 @@
 public class Solution {
     // bfs
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
-        Set<UndirectedGraphNode> done = new HashSet<>();
-        Queue<UndirectedGraphNode> queue = new ArrayDeque<>();
-        if (node != null) queue.offer(node);
-        while (!queue.isEmpty()) {
-            // no need to traverse level by level
-            //int len = queue.size();
-            //for (int i = 0; i < len; i++) {
-                UndirectedGraphNode cur = queue.poll();
-                if (done.contains(cur)) continue;
-                // copy current node
-                map.putIfAbsent(cur, new UndirectedGraphNode(cur.label));
-                for (UndirectedGraphNode nb : cur.neighbors) {
-                    // copy neighbor node
-                    map.putIfAbsent(nb, new UndirectedGraphNode(nb.label));
-                    // add to current node neighbors
-                    map.get(cur).neighbors.add(map.get(nb));
-                    // queued neightbor node to visit later
-                    queue.offer(nb);
-                }
-                // done copying current node
-                done.add(cur);
-            //}
+        if (node == null) {
+            return null;
         }
-        return map.getOrDefault(node, null);
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        Deque<UndirectedGraphNode> queue = new ArrayDeque<>();
+        Set<UndirectedGraphNode> done = new HashSet<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode cur = queue.poll();
+            if (done.contains(cur)) {
+                continue;
+            }
+            map.putIfAbsent(cur, new UndirectedGraphNode(cur.label));
+            UndirectedGraphNode copy = map.get(cur);
+            for (UndirectedGraphNode next : cur.neighbors) {
+                map.putIfAbsent(next, new UndirectedGraphNode(next.label));
+                copy.neighbors.add(map.get(next));
+                queue.offer(next);
+            }
+            done.add(cur);
+        }
+        return map.get(node);
     }
 
-    // dfs + recursion
+    // dfs
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         return cloneGraph(node, new HashMap<>());
     }
