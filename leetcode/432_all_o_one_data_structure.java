@@ -1,5 +1,111 @@
 class AllOne {
 
+    /** Initialize your data structure here. */
+    class Node {
+        int count;
+        Set<String> keys;
+        Node prev;
+        Node next;
+
+        Node(int _count) {
+            count = _count;
+            keys = new HashSet<>();
+        }
+    }
+
+    private final Map<String, Node> map;
+    private final Node head;
+
+    public AllOne() {
+        map = new HashMap<>();
+        head = new Node(0);
+        head.prev = head;
+        head.next = head;
+    }
+
+    /** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
+    public void inc(String key) {
+        if (map.containsKey(key)) {
+            Node old = map.get(key);
+            old.keys.remove(key);
+            if (old.next.count != old.count + 1) {
+                Node newNode = new Node(old.count + 1);
+                newNode.keys.add(key);
+                attachAfter(newNode, old);
+            } else {
+                old.next.keys.add(key);
+            }
+            // update register info
+            map.put(key, old.next);
+            if (old.keys.isEmpty()) {
+                detach(old);
+            }
+        } else {
+            if (head.next.count != 1) {
+                attachAfter(new Node(1), head);
+            }
+            head.next.keys.add(key);
+            // update register info
+            map.put(key, head.next);
+        }
+    }
+
+    /** Decrements an existing key by 1. If Key's value is 1, remove it from the data structure. */
+    public void dec(String key) {
+        if (!map.containsKey(key)) {
+            return;
+        }
+        Node old = map.get(key);
+        old.keys.remove(key);
+        if (old.count == 1) {
+            // update register info
+            map.remove(key);
+        } else {
+            if (old.prev.count != old.count - 1) {
+                Node newNode = new Node(old.count - 1);
+                newNode.keys.add(key);
+                attachAfter(newNode, old.prev);
+            } else {
+                old.prev.keys.add(key);
+            }
+            // update register info
+            map.put(key, old.prev);
+        }
+        if (old.keys.isEmpty()) {
+            detach(old);
+        }
+    }
+
+    /** Returns one of the keys with maximal value. */
+    public String getMaxKey() {
+        return map.isEmpty() ? "" : head.prev.keys.iterator().next();
+    }
+
+    /** Returns one of the keys with Minimal value. */
+    public String getMinKey() {
+        return map.isEmpty() ? "" : head.next.keys.iterator().next();
+    }
+
+    // attach a between b and b.next
+    private void attachAfter(Node a, Node b) {
+        a.prev = b;
+        a.next = b.next;
+        b.next.prev = a;
+        b.next = a;
+    }
+
+    private void detach(Node a) {
+        Node prev = a.prev;
+        Node next = a.next;
+        prev.next = next;
+        next.prev = prev;
+        a.prev = null;
+        a.next = null;
+    }
+}
+
+class AllOne {
+
     // bucket node
     private class Node {
         int count;
