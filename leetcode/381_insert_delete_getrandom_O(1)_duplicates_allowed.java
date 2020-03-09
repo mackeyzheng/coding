@@ -16,7 +16,7 @@ class RandomizedCollection {
     public boolean insert(int val) {
         boolean ret = !map.containsKey(val);
         if (!map.containsKey(val)) {
-            map.put(val, new LinkedHashSet<>()); // iterable hash set
+            map.put(val, new HashSet<>());
         }
         map.get(val).add(list.size());
         list.add(val);
