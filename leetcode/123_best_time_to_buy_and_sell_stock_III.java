@@ -1,5 +1,6 @@
 class Solution {
     // state machine and dp
+    // explaination https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/discuss/149383/Easy-DP-solution-using-state-machine-O(n)-time-complexity-O(1)-space-complexity
     public int maxProfit(int[] prices) {
         int s1 = Integer.MIN_VALUE;
         int s2 = Integer.MIN_VALUE;
