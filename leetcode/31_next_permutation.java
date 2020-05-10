@@ -1,35 +1,43 @@
 class Solution {
-    // straight version
+    /**
+     * For example
+     * 7, 6, 2, 5, 4, 1
+     *
+     * Step 1
+     * Looking backward, need to find the range that can be rearranged to
+     * obtain a bigger value. It is [2]541 (Becasue 1, 41, 541 can't be)
+     *
+     * Step 2
+     * The objective here is to replace [2] witht the number to the right
+     * that's just bigger than [2], in this case it is [4], so
+     * 2, 5, 4, 1 -> 4, 5, 2, 1
+     *
+     * Step 3
+     * The numbers following [4] are sorted in descending order,
+     * reverse these to get the smallest number starting with [4]
+     * 4, 5, 2, 1 -> 4, 1, 2, 5
+     *
+     * Thus the final result is: 7, 6, 4, 1, 2, 5
+     */
     public void nextPermutation(int[] nums) {
-        if (nums == null || nums.length < 2) {
-            return;
+        // find the first decreasing number
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
         }
 
-        int p = 0;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] > nums[i - 1]) {
-                p = i;
+        // find the number just greater than nums[i]
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j > i && nums[j] <= nums[i]) {
+                j--;
             }
+            // swap these two numbers
+            swap(nums, i, j);
         }
 
-        if (p - 1 < 0) {
-            reverse(nums, 0, nums.length - 1);
-            return;
-        }
-
-        int q = p + 1;
-        while (q < nums.length && nums[q] > nums[p - 1]) {
-            q++;
-        }
-        q--;
-        swap(nums, p - 1, q);
-        reverse(nums, p, nums.length - 1);
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
+        // reverse [i+1, ...] to get the smallest number starting with nums[i]
+        reverse(nums, i + 1, nums.length - 1);
     }
 
     private void reverse(int[] nums, int s, int e) {
@@ -40,36 +48,9 @@ class Solution {
         }
     }
 
-    // clean version
-    public void nextPermutation(int[] num) {
-        int pIndex = num.length - 1;
-        while (pIndex > 0) {
-            if (num[pIndex - 1] < num[pIndex])
-                break;
-            pIndex--;
-        }
-
-        if (pIndex > 0) {
-            // swap
-            pIndex--;
-            int cIndex = num.length - 1;
-            while (cIndex >= 0 && num[cIndex] <= num[pIndex])
-                cIndex--;
-
-            int swapNum = num[cIndex];
-            num[cIndex] = num[pIndex];
-            num[pIndex] = swapNum;
-            pIndex++;
-        }
-
-        // reverse the sequence right to partition number
-        int end = num.length - 1;
-        while (end > pIndex) {
-            int swapNum = num[end];
-            num[end] = num[pIndex];
-            num[pIndex] = swapNum;
-            pIndex++;
-            end--;
-        }
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }
